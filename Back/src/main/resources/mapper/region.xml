@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.region.model.mapper.RegionMapper">
+
+<resultMap type="AddressInfo" id="info">
+	<result column="dongCode" property="dongCode"></result>
+	<result column="name" property="name"></result>
+</resultMap>
+
+
+  <select id="getSidoList" resultType="AddressInfo">
+	select dongCode, sidoName from  dongcode where RIGHT(dongCode,8)='00000000'
+  </select>
+  
+   <select id="getGugunList" parameterType="string" resultType="AddressInfo">
+	select dongCode, gugunName from  dongcode where (left(dongcode,2)=#{code}) and (RIGHT(dongcode,6)='000000') and (RIGHT(dongcode,8) != '00000000')
+  </select>
+  
+  <select id="getDongList" parameterType="string" resultType="AddressInfo">
+	select dongCode, dongName from  dongcode where (left(dongcode,4)=#{code}) and (RIGHT(dongcode,6) != '000000')
+  </select>
+  
+  
+  
+ </mapper>

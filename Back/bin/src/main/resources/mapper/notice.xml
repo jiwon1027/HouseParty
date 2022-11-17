@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.notice.model.mapper.NoticeMapper">
+
+	<resultMap type="Notice" id="notice">
+		<result column="article_no" property="articleNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="subject" property="subject"/>
+		<result column="content" property="content"/>
+		<result column="hit" property="hit"/>
+		<result column="register_time" property="registerTime"/>
+	</resultMap>
+	
+	<insert id="insert" parameterType="notice">
+		insert into notice (user_id, subject, content, hit, register_time)
+		values (#{userId}, #{subject}, #{content}, 0, now())
+	</insert>
+	
+	<update id="update" parameterType="notice">
+		update notice
+		set subject = #{subject}, content = #{content}
+		where article_no = #{articleNo}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		delete from notice
+		where article_no = #{articleNo}
+	</delete>
+	
+	<select id="searchById" parameterType="string" resultMap="notice">
+		select article_no, user_id, subject, content, hit, register_time
+		from notice
+		where article_no = #{articleNo}
+	</select>
+	
+	<select id="selectAll" parameterType="string" resultMap="notice">
+		select article_no, user_id, subject, content, hit, register_time
+		from notice
+	</select>
+
+</mapper>

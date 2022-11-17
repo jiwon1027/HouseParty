@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.apt.model.mapper.AptMapper">
+
+
+  
+<select id="aptList" parameterType="AptInfo" resultType="AptInfo">
+	select aptCode, apartmentName, dealAmount, area, dealyear, dealmonth , dealday, lat, lng
+	from house
+	where dealyear =#{dealyear} and dealMonth=#{dealmonth} and dongCode =#{dongCode}
+</select>
+  
+  
+  
+ </mapper>
