@@ -11,16 +11,11 @@ import MaterialInput from "@/components/MaterialInput.vue";
 import MaterialSwitch from "@/components/MaterialSwitch.vue";
 import MaterialButton from "@/components/MaterialButton.vue";
 
-// material-input
-import setMaterialInput from "@/assets/js/material-input";
-
-import NoticeComponent from "@/views/LandingPages/Notice/NoticeComponent.vue";
-
-
-onMounted(() => {
-  setMaterialInput();
-});
+//board
+import BoardComponent from "@/views/LandingPages/Board/BoardComponent.vue";
+import BoardInputItem from "@/views/LandingPages/Board/BoardInputItem.vue";
 </script>
+
 <template>
   <div class="container position-sticky z-index-sticky top-0">
           <DefaultNavbar transparent />
@@ -34,30 +29,25 @@ onMounted(() => {
       }"
       loading="lazy"
     >
+      <span class="mask bg-gradient-dark opacity-6"></span>
 
-          <span class="mask bg-gradient-dark opacity-6"></span>
-
-  <div class="container my-auto mt-8">
-    <div class="row">
-      <div class="col-lg-12 col-md-8 col-12">
-        <div class="card z-index-0 fadeIn3 fadeInBottom">
-          <div class="card-body">
-            <div class="d-flex justify-content-between">
-            <h2 class="ms-4">공지사항</h2>
-            <a class="btn btn-outline-secondary me-5" role="button">
-                <router-link :to="{ name: 'noticewrite' }">
-                글쓰기
-              </router-link>
-            </a>
+      <div class="container my-auto mt-8">
+        <div class="row">
+          <div class="col-lg-12 col-md-8 col-12">
+            <div class="card z-index-0 fadeIn3 fadeInBottom">
+              <div class="card-body">
+                <h2 class="ms-4">글쓰기</h2>
+                  <BoardInputItem kind="put"/>
+              </div>
             </div>
-              <NoticeComponent/>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
 
     </div>
   </Header>
+
 </template>
+
+<style></style>

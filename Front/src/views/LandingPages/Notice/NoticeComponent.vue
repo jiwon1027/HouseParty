@@ -1,20 +1,4 @@
 <template>
-  <!-- <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet"> -->
-<!-- 
-    <link rel="stylesheet" href="src\assets\fonts\board/icomoon/style.css">
-
-    <link rel="stylesheet" href="src\assets\fonts\board/css/board/owl.carousel.min.css">
-
-    <link rel="stylesheet" href="src\assets\fonts\board/css/board/bootstrap.min.css">
-    
-    <link rel="stylesheet" href="src\assets\fonts\board/css/board/style.css"> -->
-
-    <!-- <title>Table #6</title>
-  </head> -->
-  <!-- <body> -->
   
 
   <div class="content">
@@ -27,133 +11,31 @@
           <thead>
             <tr>
               
-              <th scope="col">Order</th>
-              <th scope="col">Name</th>
-              <th scope="col">Occupation</th>
-              <th scope="col">Contact</th>
-              <th scope="col">Education</th>
+              <th scope="col">articleNo</th>
+              <th scope="col">ID</th>
+              <th scope="col">subject</th>
+              <th scope="col">content</th>
+              <th scope="col">registerTime</th>
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            <tr scope="row">
+            <tr v-for="notice in noticeList" v-bind:key="noticeList">
+              <td>
+                {{notice.articleNo}}
+              </td>
+              <td>{{notice.userId}}</td>
+              <td>{{notice.subject}}</td>
+              <td>{{notice.content}}</td>
+              <td>{{notice.registerTime}}</td>
+              <td>
 
-              
-                      
-                      <td>
-                        1392
-                      </td>
-                      <td><a href="#">James Yates</a></td>
-                      <td>
-                        Web Designer
-                        <small class="d-block">Far far away, behind the word mountains</small>
-                      </td>
-                      <td>+63 983 0962 971</td>
-                      <td>NY University</td>
-                      <td><a href="#" class="more">Details</a></td>
-            
-            </tr>
 
-            <tr>
-              
-              <td>4616</td>
-              <td><a href="#">Matthew Wasil</a></td>
-              <td>
-                Graphic Designer
-                <small class="d-block">Far far away, behind the word mountains</small>
+              <RouterLink :to="{ name: 'noticeDetail' , params: {articleNo: `${notice.articleNo}`} }">
+                Detail
+              </RouterLink>
               </td>
-              <td>+02 020 3994 929</td>
-              <td>London College</td>
-              <td><a href="#" class="more">Details</a></td>
             </tr>
-            <tr>
-              
-              <td>9841</td>
-              <td><a href="#">Sampson Murphy</a></td>
-              <td>
-                Mobile Dev
-                <small class="d-block">Far far away, behind the word mountains</small>
-              </td>
-              <td>+01 352 1125 0192</td>
-              <td>Senior High</td>
-              <td><a href="#" class="more">Details</a></td>
-            </tr>
-            <tr>
-              
-              <td>9548</td>
-              <td><a href="#">Gaspar Semenov</a></td>
-              <td>
-                Illustrator
-                <small class="d-block">Far far away, behind the word mountains</small>
-              </td>
-              <td>+92 020 3994 929</td>
-              <td>College</td>
-              <td><a href="#" class="more">Details</a></td>
-            </tr>
-
-            <tr>
-              
-              <td>4616</td>
-              <td><a href="#">Matthew Wasil</a></td>
-              <td>
-                Graphic Designer
-                <small class="d-block">Far far away, behind the word mountains</small>
-              </td>
-              <td>+02 020 3994 929</td>
-              <td>London College</td>
-              <td><a href="#" class="more">Details</a></td>
-            </tr>
-            <tr>
-              
-              <td>9841</td>
-              <td><a href="#">Sampson Murphy</a></td>
-              <td>
-                Mobile Dev
-                <small class="d-block">Far far away, behind the word mountains</small>
-              </td>
-              <td>+01 352 1125 0192</td>
-              <td>Senior High</td>
-              <td><a href="#" class="more">Details</a></td>
-            </tr>
-            <tr>
-              
-              <td>9548</td>
-              <td><a href="#">Gaspar Semenov</a></td>
-              <td>
-                Illustrator
-                <small class="d-block">Far far away, behind the word mountains</small>
-              </td>
-              <td>+92 020 3994 929</td>
-              <td>College</td>
-              <td><a href="#" class="more">Details</a></td>
-            </tr>
-
-            <tr>
-              
-              <td>9548</td>
-              <td><a href="#">Gaspar Semenov</a></td>
-              <td>
-                Illustrator
-                <small class="d-block">Far far away, behind the word mountains</small>
-              </td>
-              <td>+92 020 3994 929</td>
-              <td>College</td>
-              <td><a href="#" class="more">Details</a></td>
-            </tr>
-
-            <tr>
-              
-              <td>9548</td>
-              <td><a href="#">Gaspar Semenov</a></td>
-              <td>
-                Illustrator
-                <small class="d-block">Far far away, behind the word mountains</small>
-              </td>
-              <td>+92 020 3994 929</td>
-              <td>College</td>
-              <td><a href="#" class="more">Details</a></td>
-            </tr>
-            
           </tbody>
         </table>
       </div>
@@ -170,12 +52,23 @@
   <!-- </body> -->
 </template>
 
-<script>
-export default {
 
+<script>
+import axios from 'axios';
+
+export default {
+	data() {
+		return{
+			noticeList : [],
+		}
+	},
+
+	created() {
+			axios
+				.get("http://localhost/happyhouse/notice")
+				.then((response)=>{
+					this.noticeList = response.data
+				})
+	},
 }
 </script>
-
-<style>
-
-</style>

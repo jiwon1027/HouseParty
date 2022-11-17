@@ -10,6 +10,14 @@ import BoardView from "../views/LandingPages/Board/Board.vue";
 import NoticeView from "../views/LandingPages/Notice/Notice.vue";
 import NewsView from "../views/LandingPages/News/News.vue";
 
+import BoardDetailView from "../views/LandingPages/Board/BoardDetailView.vue";
+import NoticeDetailView from "../views/LandingPages/Notice/NoticeDetailView.vue";
+import Boardwrite from "../views/LandingPages/Board/BoardWrite.vue";
+import NoticeWrite from "../views/LandingPages/Notice/NoticeWrite.vue";
+import BoardUpdateView from "../views/LandingPages/Board/BoardUpdateView.vue";
+import NoticeUpdateView from "../views/LandingPages/Notice/NoticeUpdateView.vue";
+
+
 //드롭다운 하는데 이게 대체 왜 필요하냐
 import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
 
@@ -54,6 +62,12 @@ const router = createRouter({
       component: NoticeView,
     },
     {
+      path: "/notice/:articleNo",
+      name: "noticeDetail",
+      component: NoticeDetailView,
+    }
+    ,
+    {
       path: "/news",
       name: "news",
       component: NewsView,
@@ -62,7 +76,23 @@ const router = createRouter({
       path: "/board",
       name: "board",
       component: BoardView,
+    },
+    {
+      path: "/board/:articleNo",
+      name: "boardDetail",
+      component: BoardDetailView,
+    },
+    {
+      path: "/boardwrite",
+      name: "boardwrite",
+      component: Boardwrite,
+    },
+    {
+      path: "/noticewrite",
+      name: "noticewrite",
+      component: NoticeWrite,
     }
+
 
 
 
