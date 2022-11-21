@@ -15,8 +15,6 @@ import BoardDetailView from "../views/LandingPages/Board/BoardDetailView.vue";
 import NoticeDetailView from "../views/LandingPages/Notice/NoticeDetailView.vue";
 import Boardwrite from "../views/LandingPages/Board/BoardWrite.vue";
 import NoticeWrite from "../views/LandingPages/Notice/NoticeWrite.vue";
-import BoardUpdateView from "../views/LandingPages/Board/BoardUpdateView.vue";
-import NoticeUpdateView from "../views/LandingPages/Notice/NoticeUpdateView.vue";
 
 //토큰 디코딩
 import jwtDecode from "jwt-decode";

@@ -6,13 +6,38 @@
 <mapper namespace="com.ssafy.apt.model.mapper.AptMapper">
 
 
-  
+<!--
 <select id="aptList" parameterType="AptInfo" resultType="AptInfo">
 	select aptCode, apartmentName, dealAmount, area, dealyear, dealmonth , dealday, lat, lng
 	from house
 	where dealyear=#{dealyear} and dealMonth=#{dealmonth} and dongCode=#{dongCode}
 </select>
+  -->  
   
+	<resultMap type="AptInfo" id="aptInfo">
+		<result column="aptCode" property="aptCode"/>
+		<result column="apartmentName" property="apartmentName"/>
+		<result column="dealAmount" property="dealAmount"/>
+		<result column="area" property="area"/>
+		<result column="dealyear" property="dealyear"/>
+		<result column="dealmonth" property="dealmonth"/>
+		<result column="dealday" property="dealmonth"/>
+		<result column="lat" property="lat"/>
+		<result column="lng" property="lng"/>
+	</resultMap>
+	
+<select id="aptList" parameterType="string" resultType="aptInfo">
+	select aptCode, apartmentName, dealAmount, area, dealyear, dealmonth , dealday, lat, lng
+	from house
+	where dongCode=#{dongCode}
+</select>
+
+<select id="searchByAptName" parameterType="string" resultType="aptInfo">
+	select aptCode, apartmentName, dealAmount, area, dealyear, dealmonth , dealday, lat, lng
+	from house
+	where apartmentName like CONCAT('%',#{keyword},'%')
+</select>
+
   
 <select id="insertFavArea" parameterType="map">
 	insert into interest_address(user_id, dongCode) values (#{userId}, #{dongCode});

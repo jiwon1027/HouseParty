@@ -19,6 +19,14 @@ public class Board {
 		this.hit = hit;
 		this.registerTime = registerTime;
 	}
+	
+
+	public Board() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public int getArticleNo() {
 		return articleNo;
 	}
@@ -30,7 +38,7 @@ public class Board {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
+	} 
 	public String getSubject() {
 		return subject;
 	}

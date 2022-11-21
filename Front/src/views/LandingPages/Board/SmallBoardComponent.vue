@@ -15,13 +15,17 @@
 						      <th>번호</th>
 						      <th>제목</th>
 						    </tr>
-						  </thead>
-						  <tbody class="text-center">
-						    <tr v-for="board in boardList" v-bind:key="boardList">
-						      <th scope="row">{{board.articleNo}}</th>
-						      <td>{{board.subject}}</td>
-						    </tr>
-						  </tbody>
+							</thead>
+								<tbody class="text-center">
+								<tr v-for="(board,index) in boardList" v-bind:key="boardList">
+									<th scope="row" v-if="index < 5">{{board.articleNo}}</th>
+									<td v-if="index < 5">
+										<RouterLink :to="{ name: 'boardDetail' , params: {articleNo: `${board.articleNo}`} }">
+											<div>{{board.subject}}</div>
+										</RouterLink>
+									</td>
+								</tr>
+							</tbody>
 						</table>
 					</div>
 				</div>
@@ -58,7 +62,9 @@ export default {
 
 	created() {
 			axios
-				.get("http://localhost/happyhouse/board")
+				.get("http://localhost/happyhouse/board",{
+        withCredentials: false,
+      })
 				.then((response)=>{
 					this.boardList = response.data
 				})

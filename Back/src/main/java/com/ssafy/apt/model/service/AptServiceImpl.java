@@ -21,12 +21,17 @@ public class AptServiceImpl implements AptService {
 		this.aptMapper = aptMapper;
 	}
 
+//	@Override
+//	public List<AptInfo> aptList(int dealyear, int dealmonth, String dongCode) throws SQLException {
+//		return aptMapper.aptList(dealyear, dealmonth, dongCode);
+//
+//	}
+	
 	@Override
-	public List<AptInfo> aptList(int dealyear, int dealmonth, String dongCode) throws SQLException {
-		return aptMapper.aptList(dealyear, dealmonth, dongCode);
+	public List<AptInfo> aptList(String dongCode) throws SQLException {
+		return aptMapper.aptList(dongCode);
 
 	}
-
 	@Override
 	public void insertFavArea(Map<String,String> map) throws SQLException {
 		aptMapper.insertFavArea(map);
@@ -45,6 +50,11 @@ public class AptServiceImpl implements AptService {
 	@Override
 	public void deleteFavApt(Map<String,String> map) throws SQLException {
 		aptMapper.deleteFavApt(map);
+	}
+
+	@Override
+	public List<AptInfo> searchByAptName(String aptName) throws SQLException {
+		return aptMapper.searchByAptName(aptName);
 	}
 
 

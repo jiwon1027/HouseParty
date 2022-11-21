@@ -37,7 +37,7 @@ import BoardInputItem from "@/views/LandingPages/Board/BoardInputItem.vue";
             <div class="card z-index-0 fadeIn3 fadeInBottom">
               <div class="card-body">
                 <h2 class="ms-4">글쓰기</h2>
-                  <BoardInputItem kind="post"/>
+                  <BoardInputItem/>
               </div>
             </div>
           </div>

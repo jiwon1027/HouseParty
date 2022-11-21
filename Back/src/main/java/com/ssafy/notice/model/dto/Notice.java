@@ -19,6 +19,29 @@ public class Notice {
 		this.hit = hit;
 		this.registerTime = registerTime;
 	}
+	
+	
+	
+	
+	public Notice(int articleNo, String userId, String subject, String content) {
+		super();
+		this.articleNo = articleNo;
+		this.userId = userId;
+		this.subject = subject;
+		this.content = content;
+	}
+
+
+
+
+	public Notice() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
 	public int getArticleNo() {
 		return articleNo;
 	}

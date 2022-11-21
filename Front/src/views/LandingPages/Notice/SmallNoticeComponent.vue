@@ -29,9 +29,13 @@
 						    </tr>
 						  </thead>
 						  <tbody class="text-center">
-						    <tr v-for="notice in noticeList" v-bind:key="noticeList">
-						      <th scope="row">{{notice.articleNo}}</th>
-						      <td>{{notice.subject}}</td>
+						    <tr v-for="(notice,index) in noticeList" v-bind:key="noticeList">
+						      <th scope="row" v-if="index < 5">{{notice.articleNo}}</th>
+						      <td v-if="index < 5">
+								<RouterLink :to="{ name: 'noticeDetail' , params: {articleNo: `${notice.articleNo}`} }">
+									<div>{{notice.subject}}</div>
+								</RouterLink>
+							  </td>
 						    </tr>
 						  </tbody>
 						</table>
@@ -70,7 +74,9 @@ export default {
 
 	created() {
 			axios
-				.get("http://localhost/happyhouse/notice")
+				.get("http://localhost/happyhouse/notice",{
+        withCredentials: false,
+      })
 				.then((response)=>{
 					this.noticeList = response.data
 				})

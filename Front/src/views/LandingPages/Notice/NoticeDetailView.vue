@@ -35,44 +35,21 @@ import BoardComponent from "@/views/LandingPages/Board/BoardComponent.vue";
           <div class="col-lg-12 col-md-8 col-12">
             <div class="card z-index-0 fadeIn3 fadeInBottom">
               <div class="card-body">
-                <h2 class="ms-4">상세보기</h2>
-                  <table class="table table-striped custom-table">
-                    <thead>
-                      <tr>      
-                        <th scope="col">articleNo</th>
-                        <th scope="col">ID</th>
-                        <th scope="col">subject</th>
-                        <th scope="col">content</th>
-                        <th scope="col">registerTime</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-bind="noticeInfo">
-                        <td>
-                          {{noticeInfo.articleNo}}
-                        </td>
-                        <td>{{noticeInfo.userId}}</td>
-                        <td>{{noticeInfo.subject}}</td>
-                        <td>{{noticeInfo.content}}</td>
-                        <td>{{noticeInfo.registerTime}}</td>
-                      </tr>  
-                    </tbody>
-                  </table>
+                  <div>
+                      <div class="mb-3 my-4">
+                      <label class="form-label ms-4 fs-4">제목</label>
+                      <input  type="text" class="form-control border border-dark ms-4 ps-2 w-95" @input="noticeInfo.subject=$event.target.value" :value="noticeInfo.subject">
+                      
+                      </div>
+                    <div class="mb-3 my-4">
+                      <label class="form-label ms-4 fs-4">내용</label>
+                      <textarea class="form-control border border-dark mx-4 ps-2 w-95" id="content" rows="10" @input="noticeInfo.content=$event.target.value" :value="noticeInfo.content"></textarea>
+                    </div>
+                  </div>
 
-                  <MaterialButton
-                    variant="gradient"
-                    color="secondary"
-                    @click="">
-                    수정
-                    </MaterialButton>
-
-                  <MaterialButton
-                    variant="gradient"
-                    color="secondary"
-                    @click="noticeDelete()">
-                    삭제
-                    </MaterialButton>
-                  
+                    <button class="ms-4 fs-6 btn btn-outline-success" @click="noticeUpdate()" >수정</button>
+                    <button class="ms-4 fs-6 btn btn-outline-danger" @click="noticeDelete()" >삭제</button>
+            
               </div>
             </div>
           </div>
@@ -95,17 +72,33 @@ export default {
 		}
 	},
   methods: {
+    noticeUpdate(){
+      console.log("notice update함")
+      console.log(this.noticeInfo)
+
+			axios.put(`http://localhost/happyhouse/notice`,{
+            articleNo : this.noticeInfo.articleNo,
+            userId : this.noticeInfo.userId,
+            subject : this.noticeInfo.subject,
+            content : this.noticeInfo.content
+        },{
+        withCredentials: false,
+      }).then(()=>{
+          this.$router.push({ name: "notice" });
+				})
+    },
+
+
     noticeDelete(){
-      console.log("asdfasdfasd")
-			// axios
-			// 	.delete(`http://localhost/happyhouse${this.$route.path}`)
-			// 	.then((response)=>{
-			// 		this.boardInfo = response.data
-			// 	})
+      console.log("notice delete함")
+      axios.delete(`http://localhost/happyhouse${this.$route.path}`,{
+        withCredentials: false, 
+      }).then(()=>{
+          this.$router.push({ name: "notice" });
+				})
     }
   },
 	created() {
-
 			axios
 				.get(`http://localhost/happyhouse${this.$route.path}`)
 				.then((response)=>{

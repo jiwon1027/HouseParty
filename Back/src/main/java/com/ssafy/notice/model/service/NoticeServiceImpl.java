@@ -12,6 +12,7 @@ import com.ssafy.notice.model.mapper.NoticeMapper;
 import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
 	
 	NoticeMapper noticeMapper;

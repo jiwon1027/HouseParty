@@ -9,6 +9,8 @@ export default {
           gugunLabel: '구 선택',
           dongLabel: '동 선택',
 
+          aptCode:"",
+
           sidoList:[],
           gugunList:[],
           dongList:[],
@@ -27,7 +29,9 @@ export default {
 
       selectGugun(regCode){
         axios
-          .get(`http://localhost/happyhouse/region/gugun/${regCode}`)
+          .get(`http://localhost/happyhouse/region/gugun/${regCode}`,{
+        withCredentials: false,
+      })
           .then((response)=>{
             this.gugunList = response.data
           })
@@ -35,16 +39,39 @@ export default {
 
       selectDong(regCode){
         axios
-          .get(`http://localhost/happyhouse/region/dong/${regCode}`)
+          .get(`http://localhost/happyhouse/region/dong/${regCode}`,{
+        withCredentials: false,
+      })
           .then((response)=>{
             this.dongList = response.data
           })
-      }
+      },
+      selectApt(regCode){
+        this.aptCode = regCode;
+      },
+      searchAptList(){
+        console.log("아파트 리스트 불러올꺼임")
+        console.log(this.aptCode)
+
+        axios
+          .get(`http://localhost/happyhouse/apts/${this.aptCode}`,
+        {
+        withCredentials: false,
+      })
+				.then((response)=>{
+					console.log(response)
+				})
+
+      
+    },
+
     },
 
     created() {
         axios
-          .get("http://localhost/happyhouse/region/sido")
+          .get("http://localhost/happyhouse/region/sido",{
+        withCredentials: false,
+      })
           .then((response)=>{
             this.sidoList = response.data
           })
@@ -137,7 +164,7 @@ import MaterialButton from "@/components/MaterialButton.vue";
             >
 
           <li v-for="dong in dongList" v-bind:key="dongList">
-                <a class="dropdown-item border-radius-md" href="javascript:;" @click="changeDong(`${dong.name}`)">
+                <a class="dropdown-item border-radius-md" href="javascript:;"  @click="changeDong(`${dong.name}`), selectApt(`${dong.dongCode}`)">
                   {{dong.name}}
                   </a>
           </li>
@@ -150,7 +177,8 @@ import MaterialButton from "@/components/MaterialButton.vue";
         <div id = "searchButton" class="d-inline p-4">
           <MaterialButton
             variant="gradient"
-            color="secondary">
+            color="secondary"
+            @click="searchAptList()">
             검색
             </MaterialButton>
         </div>

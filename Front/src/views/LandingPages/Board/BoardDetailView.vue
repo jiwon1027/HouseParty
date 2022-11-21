@@ -35,45 +35,21 @@ import BoardComponent from "@/views/LandingPages/Board/BoardComponent.vue";
           <div class="col-lg-12 col-md-8 col-12">
             <div class="card z-index-0 fadeIn3 fadeInBottom">
               <div class="card-body">
-                <h2 class="ms-4">상세보기</h2>
-                  <table class="table table-striped custom-table">
-                    <thead>
-                      <tr>      
-                        <th scope="col">articleNo</th>
-                        <th scope="col">ID</th>
-                        <th scope="col">subject</th>
-                        <th scope="col">content</th>
-                        <th scope="col">registerTime</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-bind="boardInfo">
-                        <td>
-                          {{boardInfo.articleNo}}
-                        </td>
-                        <td>{{boardInfo.userId}}</td>
-                        <td>{{boardInfo.subject}}</td>
-                        <td>{{boardInfo.content}}</td>
-                        <td>{{boardInfo.registerTime}}</td>
-                      </tr>  
-                    </tbody>
-                  </table>
-               
-                  <MaterialButton
-                    variant="gradient"
-                    color="secondary">
-                    수정
-                    </MaterialButton>
-                
-                  <MaterialButton
-                    variant="gradient"
-                    color="secondary"
-                    @click="boardDelete()">
-                    삭제
-                    </MaterialButton>
+                  <div>
+                      <div class="mb-3 my-4">
+                      <label class="form-label ms-4 fs-4">제목</label>
+                      <input type="text" class="form-control border border-dark ms-4 ps-2 w-95" @input="boardInfo.subject=$event.target.value" :value="boardInfo.subject">
+                      
+                      </div>
+                    <div class="mb-3 my-4">
+                      <label class="form-label ms-4 fs-4">내용</label>
+                      <textarea class="form-control border border-dark mx-4 ps-2 w-95" id="content" rows="10"  @input="boardInfo.content=$event.target.value" :value="boardInfo.content"></textarea>
+                    </div>
+                  </div>
 
+                    <button class="ms-4 fs-6 btn btn-outline-success" @click="boardUpdate()" >수정</button>
+                    <button class="ms-4 fs-6 btn btn-outline-danger" @click="boardDelete()" >삭제</button>
 
-                  
               </div>
             </div>
           </div>
@@ -88,6 +64,8 @@ import BoardComponent from "@/views/LandingPages/Board/BoardComponent.vue";
 
 <script>
 import axios from 'axios';
+// axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
+// axios.defaults.withCredentials = true;
 
 export default {
 	data() {
@@ -96,20 +74,43 @@ export default {
 		}
 	},
   methods: {
+    boardUpdate(){
+
+			axios.put(`http://localhost/happyhouse/board`,{
+            articleNo : this.boardInfo.articleNo,
+            userId : this.boardInfo.userId,
+            subject : this.boardInfo.subject,
+            content : this.boardInfo.content
+        },{
+        withCredentials: false,
+      }).then(()=>{
+          this.$router.push({ name: "board" });
+				})
+
+
+
+    },
+
+
     boardDelete(){
-      console.log("asdfasdfasd")
-			// axios
-			// 	.delete(`http://localhost/happyhouse${this.$route.path}`)
-			// 	.then((response)=>{
-			// 		this.boardInfo = response.data
-			// 	})
+      console.log("boardDelete")
+
+      axios.delete(`http://localhost/happyhouse${this.$route.path}`,{
+        withCredentials: false,
+      }).then(()=>{
+          this.$router.push({ name: "board" });
+				})
+
+
     }
+
   },
 
 	created() {
-			axios
-				.get(`http://localhost/happyhouse${this.$route.path}`)
-				.then((response)=>{
+
+			axios.get(`http://localhost/happyhouse${this.$route.path}`,{
+        withCredentials: false,
+      }).then((response)=>{
 					this.boardInfo = response.data
 				})
 	},

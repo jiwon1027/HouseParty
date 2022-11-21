@@ -1,4 +1,5 @@
 <template>
+  <router-view :key="$route.fullPath"/>
 
   <div class="content">
     
@@ -10,28 +11,43 @@
           <thead>
             <tr>
               
-              <th scope="col">articleNo</th>
-              <th scope="col">ID</th>
+              <th scope="col" class="ps-3 col-md-1">articleNo</th>
+              <th scope="col" class="col-md-1">ID</th>
               <th scope="col">subject</th>
-              <th scope="col">content</th>
+              <th scope="col" class="col-md-6">content</th>
               <th scope="col">registerTime</th>
-              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="board in boardList" v-bind:key="boardList">
-              <td>
-                {{board.articleNo}}
+              <td class="col-md-1 text-center">
+                <RouterLink :to="{ name: 'boardDetail' , params: {articleNo: `${board.articleNo}`} }">
+                  {{board.articleNo}}
+                </RouterLink>
               </td>
-              <td>{{board.userId}}</td>
-              <td>{{board.subject}}</td>
-              <td>{{board.content}}</td>
-              <td>{{board.registerTime}}</td>
+
               <td>
-              <RouterLink :to="{ name: 'boardDetail' , params: {articleNo: `${board.articleNo}`} }">
-                Detail
-              </RouterLink>
+                <RouterLink :to="{ name: 'boardDetail' , params: {articleNo: `${board.articleNo}`} }">
+                  {{board.userId}}
+                </RouterLink>
               </td>
+
+              <td>
+                <RouterLink :to="{ name: 'boardDetail' , params: {articleNo: `${board.articleNo}`} }">
+                  {{board.subject}}
+                </RouterLink>
+              </td>
+
+              <td>
+                <RouterLink :to="{ name: 'boardDetail' , params: {articleNo: `${board.articleNo}`} }">
+                  {{board.content}}
+                </RouterLink>
+              </td>
+
+              <td>
+                  {{board.registerTime}}
+              </td>
+
             </tr>
             
           </tbody>
@@ -55,11 +71,29 @@ export default {
 	},
 
 	created() {
+
+      console.log("asdfasdfasdfboard 받아옴")
+
 			axios
-				.get("http://localhost/happyhouse/board")
+				.get("http://localhost/happyhouse/board",{
+        withCredentials: false,
+      })
 				.then((response)=>{
+          console.log(response)
 					this.boardList = response.data
 				})
 	},
 }
 </script>
+
+<style scoped>
+	table { 
+		table-layout: fixed;
+	}
+
+	td { 
+		overflow:hidden;
+		white-space : nowrap;
+		text-overflow: ellipsis;
+	 }
+</style>

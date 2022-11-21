@@ -30,18 +30,23 @@ import BoardComponent from "@/views/LandingPages/Board/BoardComponent.vue";
     >
       <span class="mask bg-gradient-dark opacity-6"></span>
 
+
+
+
   <div class="container my-auto mt-8">
     <div class="row">
       <div class="col-lg-12 col-md-8 col-12">
         <div class="card z-index-0 fadeIn3 fadeInBottom">
           <div class="card-body">
             <div class="d-flex justify-content-between">
+
             <h2 class="ms-4">게시판</h2>
-            <a class="btn btn-outline-secondary me-5" role="button">
-                <router-link :to="{ name: 'boardwrite' }">
-                글쓰기
+            <router-link :to="{ name: 'boardwrite' }">
+              <a class="btn btn-outline-secondary me-5" role="button">
+                  글쓰기
+              </a>
               </router-link>
-            </a>
+
             </div>
               <BoardComponent/>
           </div>

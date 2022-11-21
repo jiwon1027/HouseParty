@@ -43,8 +43,8 @@ import SmallNoticeComponent from "@/views/LandingPages/Notice/SmallNoticeCompone
             <!-- 여기 공지사항, 게시판 작게 들어갈꺼임-->
 
             <div class="d-flex justify-content-center">
-                  <SmallBoardComponent title="공지사항"></SmallBoardComponent>
-                  <SmallNoticeComponent title="게시판"></SmallNoticeComponent>
+                  <SmallNoticeComponent title="공지사항"></SmallNoticeComponent>
+                  <SmallBoardComponent title="게시판"></SmallBoardComponent>
             </div>
 
       </div>

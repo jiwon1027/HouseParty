@@ -1,3 +1,6 @@
+
+
+
 <script setup>
 import { onMounted, onUnmounted } from "vue";
 
@@ -24,6 +27,33 @@ import MaterialButton from "@/components/MaterialButton.vue";
 import setMaterialInput from "@/assets/js/material-input";
 import Typed from "typed.js";
 
+import axios from 'axios';
+
+const aptName = '청운';
+
+function searchByName(){
+      console.log("아파트 이름으로 검색")
+
+
+			axios
+				.post(`http://localhost/happyhouse/apts`,{
+          apartmentName : "청운"
+        },{
+        withCredentials: false,
+      })
+				.then((response)=>{
+          console.log(response)
+				})
+
+
+
+    
+    console.log("아파트 이름으로 검색 종료")
+
+
+  }
+
+
 
 //hooks
 const body = document.getElementsByTagName("body")[0];
@@ -47,9 +77,12 @@ onUnmounted(() => {
   body.classList.remove("presentation-page");
   body.classList.remove("bg-gray-200");
 });
-
-
 </script>
+
+
+
+
+
 
 <template>
   <div class="container position-sticky z-index-sticky top-0">
@@ -85,11 +118,11 @@ onUnmounted(() => {
           <br><br><br>
             <!-- 아파트 이름으로 검색하는 input창인데 쓸지 안쓸지 모름-->
               <div>
-                
                 <MaterialInput
-                    class="input-group-outline mt-2"
-                    :label="{ text: '아파트 이름 검색', class: 'form-label' }"
-                  />
+                  class="input-group-outline mt-2"
+                  :label="{ text: '아파트 이름 검색', class: 'form-label' }"
+                  @keyup.enter="searchByName()"
+                />
               </div>
         
 

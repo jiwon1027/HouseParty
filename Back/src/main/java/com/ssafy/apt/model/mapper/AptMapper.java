@@ -10,7 +10,9 @@ import com.ssafy.apt.model.dto.AptInfo;
 
 @Mapper
 public interface AptMapper {
-	List<AptInfo> aptList(int dealyear, int dealmonth, String dongCode) throws SQLException;
+//	List<AptInfo> aptList(int dealyear, int dealmonth, String dongCode) throws SQLException;
+	List<AptInfo> aptList(String dongCode) throws SQLException;
+	List<AptInfo> searchByAptName(String aptName) throws SQLException;
 	void insertFavArea(Map<String,String> map) throws SQLException;
 	void deleteFavArea(Map<String,String> map) throws SQLException;
 	void insertFavApt(Map<String,String> map) throws SQLException;
