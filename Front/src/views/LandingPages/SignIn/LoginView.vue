@@ -16,17 +16,23 @@ import setMaterialInput from "@/assets/js/material-input";
 onMounted(() => {
   setMaterialInput();
 });
+
+defineProps({
+  kind: {
+    type: String,
+    default: "",
+  },
+});
 </script>
 <template>
   <div class="container position-sticky z-index-sticky top-0">
-          <DefaultNavbar transparent />
+    <DefaultNavbar transparent />
   </div>
   <Header>
     <div
       class="page-header align-items-start min-vh-100"
       :style="{
-        backgroundImage:
-          'url(http://localhost:8080/src/assets/img/bg1.jpg)'
+        backgroundImage: 'url(http://localhost:8080/src/assets/img/bg1.jpg)',
       }"
       loading="lazy"
     >
@@ -35,17 +41,9 @@ onMounted(() => {
         <div class="row">
           <div class="col-lg-4 col-md-8 col-12 mx-auto">
             <div class="card z-index-0 fadeIn3 fadeInBottom">
-              <div
-                class="card-header p-0 position-relative mt-n4 mx-3 z-index-2"
-              >
-                <div
-                  class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1"
-                >
-                  <h4
-                    class="text-white font-weight-bolder text-center mt-2 mb-0"
-                  >
-                    로그인
-                  </h4>
+              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
+                  <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">로그인</h4>
                   <div class="row mt-3">
                     <div class="col-2 text-center ms-auto">
                       <a class="btn btn-link px-3" href="javascript:;">
@@ -66,70 +64,114 @@ onMounted(() => {
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start">
-                  <MaterialInput
-                    id="id"
-                    class="input-group-outline my-3"
-                    :label="{ text: 'ID', class: 'form-label' }"
-                    color="#000000"
+                <material-input
+                  id="id"
+                  v-on:input="setUserId($event.target.value)"
+                  v-on:click="setMessage()"
+                  @keyup.enter="login()"
+                  class="input-group-outline my-3"
+                  :label="{ text: 'ID', class: 'form-label' }"
+                  color="#000000"
+                />
+                <material-input
+                  id="password"
+                  v-on:input="setUserPw($event.target.value)"
+                  v-on:click="setMessage()"
+                  @keyup.enter="login()"
+                  class="input-group-outline mb-3"
+                  :label="{ text: 'Password', class: 'form-label' }"
+                  type="password"
+                  color="#000000"
+                />
 
-                  />
-                  <MaterialInput
-                    id="password"
-                    class="input-group-outline mb-3"
-                    :label="{ text: 'Password', class: 'form-label' }"
-                    type="password"
-                    color="#000000"
-                  />
-                  <MaterialSwitch
-                    class="d-flex align-items-center mb-3"
-                    id="rememberMe"
-                    labelClass="mb-0 ms-3"
-                    checked
-                    >아이디 저장</MaterialSwitch
+                <!-- 에러 메세지 -->
+                <div class="text-danger mb-3">{{ message }}</div>
+
+                <MaterialSwitch
+                  class="d-flex align-items-center mb-3"
+                  id="rememberMe"
+                  labelClass="mb-0 ms-3"
+                  checked
+                  >아이디 저장</MaterialSwitch
+                >
+
+                <div class="text-center">
+                  <MaterialButton
+                    class="my-4 mb-2"
+                    variant="gradient"
+                    color="success"
+                    fullWidth
+                    @click="login()"
+                    >로그인</MaterialButton
                   >
+                </div>
 
-                  <div class="text-center">
-                    <MaterialButton
-                      class="my-4 mb-2"
-                      variant="gradient"
-                      color="success"
-                      fullWidth
-                      >로그인</MaterialButton
-                    >
-                  </div>
-
-<div style="text-align : center">
-
-                  <p class=" pe-6 text-sm fa fa-lock">
+                <div style="text-align: center">
+                  <p class="pe-6 text-sm fa fa-lock">
                     <RouterLink :to="{ name: 'findpw' }">
-                    <a
-                        href="#"
-                        class="text-success text-gradient"
-                        > 비밀번호 찾기</a>                  
+                      <a href="#" class="text-success text-gradient"> 비밀번호 찾기</a>
                     </RouterLink>
                   </p>
 
-                  <p class=" mt-4 text-sm fa fa-lock">
+                  <p class="mt-4 text-sm fa fa-lock">
                     <RouterLink :to="{ name: 'signup' }">
-                    <a
-                        href="#"
-                        class="text-success text-gradient"
-                        > 회원가입</a>                  
+                      <a href="#" class="text-success text-gradient"> 회원가입</a>
                     </RouterLink>
                   </p>
-
-</div>
-
-
-
-                </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </Header>
 </template>
+
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      userId: null,
+      userPw: null,
+      message: "",
+    };
+  },
+  methods: {
+    onSubmit(e) {
+      e.preventDefault();
+    },
+    login() {
+      console.log("login success");
+      axios
+        .post("http://localhost/happyhouse/users/login", {
+          userId: this.userId,
+          userPw: this.userPw,
+        })
+        .then((response) => {
+          if (response.data.message === "success") {
+            let accessToken = response.data["access-token"];
+            let refreshToken = response.data["refresh-token"];
+            sessionStorage.setItem("access-token", accessToken);
+            sessionStorage.setItem("refresh-token", refreshToken);
+          }
+          this.$router.push({ name: "presentation" });
+        })
+        .catch((error) => {
+          this.message = error.response.data;
+        });
+    },
+    setUserPw(password) {
+      this.userPw = password;
+    },
+    setUserId(id) {
+      this.userId = id;
+    },
+    setMessage() {
+      this.message = "";
+    },
+  },
+};
+</script>

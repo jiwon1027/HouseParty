@@ -14,7 +14,6 @@ import com.ssafy.board.model.mapper.BoardMapper;
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class BoardServiceImpl implements BoardService {
 	
 	BoardMapper boardMapper;

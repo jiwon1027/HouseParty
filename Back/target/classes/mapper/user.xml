@@ -8,18 +8,24 @@
 		<result column="user_id" property="userId"/>
 		<result column="user_pw" property="userPw"/>
 		<result column="name" property="name"/>
-		<result column="age" property="age"/>
 		<result column="email" property="email"/>
+		<result column="is_admin" property="isAdmin"/>
 	</resultMap>
 	
 	<insert id="insert" parameterType="user">
-		insert into user (user_id, user_pw, name, age, email)
-		values (#{userId}, #{userPw}, #{name}, #{age}, #{email})
+		insert into user (user_id, user_pw, name, email)
+		values (#{userId}, #{userPw}, #{name}, #{email})
 	</insert>
 	
 	<update id="update" parameterType="user">
 		update user
-		set user_pw = #{userPw}, name = #{name}, age = #{age}
+		set name = #{name}, email = #{email}
+		where user_id = #{userId}
+	</update>
+	
+	<update id="updatePw" parameterType="user">
+		update user
+		set user_pw = #{userPw}
 		where user_id = #{userId}
 	</update>
 	
@@ -29,13 +35,13 @@
 	</delete>
 	
 	<select id="login" parameterType="map" resultMap="user">
-		select user_id, name
+		select user_id, name, is_admin
 		from user
 		where user_id = #{userId} and user_pw = #{userPw}
 	</select>
 	
 	<select id="getUser" parameterType="string" resultMap="user">
-		select user_id, user_pw, name, age, email
+		select user_id, user_pw, name, email
 		from user
 		where user_id = #{userId}
 	</select>
@@ -47,8 +53,27 @@
 	</select>
 	
 	<select id="getUserList" parameterType="string" resultMap="user">
-		select user_id, user_pw, name, age, email
+		select user_id, user_pw, name, email
 		from user
 	</select>
+	
+	<!-- Token -->
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from user
+		where user_id = #{userid}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update user
+		set token = #{token}
+		where user_id = #{userid}
+	</update>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update user
+		set token = #{token, jdbcType=VARCHAR}
+		where user_id = #{userid}
+	</update>
 
 </mapper>

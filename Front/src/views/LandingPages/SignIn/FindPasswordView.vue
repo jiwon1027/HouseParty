@@ -50,19 +50,12 @@ onMounted(() => {
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start">
                   <MaterialInput
                     id="id"
                     class="input-group-outline my-3"
+                    v-on:input="setUserId($event.target.value)"
                     :label="{ text: 'ID', class: 'form-label' }"
-                    color="#000000"
-
-                  />
-                  <MaterialInput
-                    id="email"
-                    class="input-group-outline mb-3"
-                    :label="{ text: 'email', class: 'form-label' }"
-                    type="email"
+                    @keyup.enter="findPw()"
                     color="#000000"
                   />
 
@@ -71,12 +64,11 @@ onMounted(() => {
                       class="my-4 mb-2"
                       variant="gradient"
                       color="success"
+                      @click="findPw()"
                       fullWidth
                       >비밀번호 찾기</MaterialButton
                     >
                   </div>
-
-                </form>
               </div>
             </div>
           </div>
@@ -86,3 +78,29 @@ onMounted(() => {
     </div>
   </Header>
 </template>
+
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      userId: null,
+    };
+  },
+  methods: {
+    findPw() {
+      axios
+        .post(`http://localhost/happyhouse/users/findpw/${this.userId}`)
+        .then((response) => {
+          if (response.data.message === "success") {
+            alert("이메일의 임시 패스워드를 확인해주세요.")
+          }
+        })
+    },
+    setUserId(id) {
+      this.userId = id;
+    },
+  },
+}
+</script>

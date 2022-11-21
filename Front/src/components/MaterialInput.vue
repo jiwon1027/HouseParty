@@ -16,9 +16,9 @@ defineProps({
       class: "",
     }),
   },
-  color:{
+  color: {
     color: String,
-    default: "#ffffff"
+    default: "#ffffff",
   },
   value: {
     type: String,
@@ -94,4 +94,3 @@ function getClasses(size, success, error) {
     />
   </div>
 </template>
-

@@ -12,10 +12,16 @@ import com.ssafy.user.model.dto.User;
 public interface UserMapper {
 	
 	int insert(User user) throws SQLException;
-	User login(Map<String, String> map) throws SQLException;
+	User login(User user) throws SQLException;
 	void update(User user) throws SQLException;
 	void delete(String id) throws SQLException;
 	void findpw(String id) throws SQLException;
+	void updatePw(User user) throws SQLException;
+
+	/* Token */
+	public void saveRefreshToken(Map<String, String> map) throws SQLException;
+	public Object getRefreshToken(String userid) throws SQLException;
+	public void deleteRefreshToken(Map<String, String> map) throws SQLException;
 	
 	/* Admin */
 	List<User> getUserList() throws SQLException;

@@ -4,6 +4,7 @@ import SignInBasicView from "../views/LandingPages/SignIn/LoginView.vue";
 import FindPasswordView from "../views/LandingPages/SignIn/FindPasswordView.vue";
 import SignUpView from "../views/LandingPages/SignIn/SignUpView.vue";
 import MypageView from "../views/LandingPages/SignIn/MypageView.vue";
+import LogoutView from "../views/LandingPages/SignIn/LogoutView.vue";
 
 import MapView from "../views/LandingPages/Map/Map.vue";
 import BoardView from "../views/LandingPages/Board/Board.vue";
@@ -17,6 +18,8 @@ import NoticeWrite from "../views/LandingPages/Notice/NoticeWrite.vue";
 import BoardUpdateView from "../views/LandingPages/Board/BoardUpdateView.vue";
 import NoticeUpdateView from "../views/LandingPages/Notice/NoticeUpdateView.vue";
 
+//토큰 디코딩
+import jwtDecode from "jwt-decode";
 
 //드롭다운 하는데 이게 대체 왜 필요하냐
 import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
@@ -36,6 +39,11 @@ const router = createRouter({
       component: SignInBasicView,
     },
     {
+      path: "/logout",
+      name: "logout",
+      component: LogoutView,
+    },
+    {
       path: "/findpw",
       name: "findpw",
       component: FindPasswordView,
@@ -49,8 +57,7 @@ const router = createRouter({
       path: "/mypage",
       name: "mypage",
       component: MypageView,
-    }
-    ,
+    },
     {
       path: "/map",
       name: "map",
@@ -65,8 +72,7 @@ const router = createRouter({
       path: "/notice/:articleNo",
       name: "noticeDetail",
       component: NoticeDetailView,
-    }
-    ,
+    },
     {
       path: "/news",
       name: "news",
@@ -86,16 +92,37 @@ const router = createRouter({
       path: "/boardwrite",
       name: "boardwrite",
       component: Boardwrite,
+      beforeEnter: (to, from, next) => {
+        let token = sessionStorage.getItem("access-token");
+
+        if (token === undefined || token === "null" || token === null) {
+          alert("로그인 해주세요.")
+          next('login');
+        }
+        else next()
+      }
     },
     {
       path: "/noticewrite",
       name: "noticewrite",
       component: NoticeWrite,
-    }
+      beforeEnter: (to, from, next) => {
+        let token = sessionStorage.getItem("access-token");
 
+        if (token === undefined || token === "null" || token === null) {
+          alert("로그인 해주세요.")
+          next('login');
+        }
 
+        let userIsAdmin = jwtDecode(token).isAdmin;
 
-
+        if (!userIsAdmin) {
+          alert("관리자만 공지사항에 글을 쓸 수 있습니다.")
+          next(false);
+        }
+        else next();
+      }
+    },
   ],
 });
 

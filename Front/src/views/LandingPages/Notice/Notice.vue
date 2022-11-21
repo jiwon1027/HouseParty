@@ -44,7 +44,9 @@ onMounted(() => {
           <div class="card-body">
             <div class="d-flex justify-content-between">
             <h2 class="ms-4">공지사항</h2>
-            <a class="btn btn-outline-secondary me-5" role="button">
+            <a
+              class="btn btn-outline-secondary me-5" 
+              role="button">
                 <router-link :to="{ name: 'noticewrite' }">
                 글쓰기
               </router-link>
