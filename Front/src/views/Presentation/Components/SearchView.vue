@@ -52,17 +52,8 @@ export default {
       searchAptList(){
         console.log("아파트 리스트 불러올꺼임")
         console.log(this.aptCode)
+        this.$router.push({ name: 'map', query: {aptCode: this.aptCode} });
 
-        axios
-          .get(`http://localhost/happyhouse/apts/${this.aptCode}`,
-        {
-        withCredentials: false,
-      })
-				.then((response)=>{
-					console.log(response)
-				})
-
-      
     },
 
     },

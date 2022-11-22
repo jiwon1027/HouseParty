@@ -18,9 +18,53 @@ import RotatingCardBack from "../../../examples/cards/rotatingCards/RotatingCard
 
 </script>
 
+<script>
+import {useRoute} from 'vue-router';
+import axios from 'axios';
 
+export default {
+  data() {
+    return {
+      aptList: [],
+    };
+  },
+  created() {
+    console.log("응애")
+    console.log(this.$route.query.aptCode)
+    console.log(this.$route.query.aptName)
+
+
+
+    if (this.$route.query.aptName != null){
+
+    axios.post(`http://localhost/happyhouse/apts`,{
+          apartmentName : this.$route.query.aptName
+        },{
+        withCredentials: false,
+      })
+        .then((response)=>{
+          console.log(response)
+          this.aptList = response.data
+
+        })
+    }
+    else if(this.$route.query.aptCode != null){
+
+    axios.get(`http://localhost/happyhouse/apts/${this.$route.query.aptCode}`,
+      {
+      withCredentials: false,
+    })
+      .then((response)=>{
+        console.log(response)
+        this.aptList = response.data
+      })
+      }
+  },
+};
+</script>
 
 <template>
+
 
   <div class="container position-sticky z-index-sticky top-0">
           <DefaultNavbar transparent />
@@ -42,67 +86,13 @@ import RotatingCardBack from "../../../examples/cards/rotatingCards/RotatingCard
             <div class="card z-index-0 fadeIn3 fadeInBottom"  style="height:700px;">
               <div class="card-body">
                 <div class="border-right h-100" id="sidebar-wrapper">
-                    <div class="list-group list-group-flush overflow-auto h-50">
-                      <div class="list-group-item list-group-item-action">
-                        <h3>ㅇㅇ아파트</h3>
-                        거래금액 : 21000만원<br>
-                        면적 : 76.66
-                        2018.4.6
+                    <div class="list-group list-group-flush overflow-auto" style="height:600px;">
+                      <div v-for="(apt,index) in aptList" class="list-group-item list-group-item-action" >
+                        <h4>{{apt.apartmentName}}</h4>
+                        거래금액 : {{apt.dealAmount}}<br>
+                        면적 : {{apt.area}}<br>
+                        {{apt.dealyear}}.{{apt.dealmonth}}.{{apt.dealday}}
                       </div>
-                      <div class="list-group-item list-group-item-action">
-                        <h3>ㅇㅇ아파트</h3>
-                        거래금액 : 21000만원<br>
-                        면적 : 76.66
-                        2018.4.6
-                      </div>
-                      <div class="list-group-item list-group-item-action">
-                        <h3>ㅇㅇ아파트</h3>
-                        거래금액 : 21000만원<br>
-                        면적 : 76.66
-                        2018.4.6
-                      </div>
-                      <div class="list-group-item list-group-item-action">
-                        <h3>ㅇㅇ아파트</h3>
-                        거래금액 : 21000만원<br>
-                        면적 : 76.66
-                        2018.4.6
-                      </div>
-                      <div class="list-group-item list-group-item-action">
-                        <h3>ㅇㅇ아파트</h3>
-                        거래금액 : 21000만원<br>
-                        면적 : 76.66
-                        2018.4.6
-                      </div>
-                      <div class="list-group-item list-group-item-action">
-                        <h3>ㅇㅇ아파트</h3>
-                        거래금액 : 21000만원<br>
-                        면적 : 76.66
-                        2018.4.6
-                      </div>
-                      <div class="list-group-item list-group-item-action">
-                        <h3>ㅇㅇ아파트</h3>
-                        거래금액 : 21000만원<br>
-                        면적 : 76.66
-                        2018.4.6
-                      </div>
-                      <div class="list-group-item list-group-item-action">
-                        <h3>ㅇㅇ아파트</h3>
-                        거래금액 : 21000만원<br>
-                        면적 : 76.66
-                        2018.4.6
-                      </div>  
-                      <div class="list-group-item list-group-item-action">
-                        <h3>ㅇㅇ아파트</h3>
-                        거래금액 : 21000만원<br>
-                        면적 : 76.66
-                        2018.4.6
-                      </div>     
-                      <div class="list-group-item list-group-item-action">
-                        <h3>ㅇㅇ아파트</h3>
-                        거래금액 : 21000만원<br>
-                        면적 : 76.66
-                        2018.4.6
-                      </div>  
                     </div>
                 </div>                 
               </div>

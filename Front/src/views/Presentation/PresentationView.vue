@@ -29,31 +29,7 @@ import Typed from "typed.js";
 
 import axios from 'axios';
 
-const aptName = '청운';
-
-function searchByName(){
-      console.log("아파트 이름으로 검색")
-
-
-			axios
-				.post(`http://localhost/happyhouse/apts`,{
-          apartmentName : "청운"
-        },{
-        withCredentials: false,
-      })
-				.then((response)=>{
-          console.log(response)
-				})
-
-
-
-    
-    console.log("아파트 이름으로 검색 종료")
-
-
-  }
-
-
+const aptName = '';
 
 //hooks
 const body = document.getElementsByTagName("body")[0];
@@ -121,8 +97,10 @@ onUnmounted(() => {
                 <MaterialInput
                   class="input-group-outline mt-2"
                   :label="{ text: '아파트 이름 검색', class: 'form-label' }"
-                  @keyup.enter="searchByName()"
+                   @input="aptName=$event.target.value"
+                  @keyup.enter="this.$router.push({ name: 'map', query: {aptName: aptName} });"
                 />
+                
               </div>
         
 
