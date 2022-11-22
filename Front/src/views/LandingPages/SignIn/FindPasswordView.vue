@@ -85,7 +85,7 @@ onMounted(() => {
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body text-center align-middle">
-            <p class="my-0">회원님의 임시 비밀번호는 {{ this.temPass }} 입니다.</p>
+            <p class="my-0">회원님의 임시 비밀번호는 {{this.temPass}}입니다.</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
