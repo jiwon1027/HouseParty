@@ -6,11 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.ssafy.user.model.dto.MailDTO;
 import com.ssafy.user.model.dto.User;
 import com.ssafy.user.model.mapper.UserMapper;
 
@@ -18,13 +15,11 @@ import com.ssafy.user.model.mapper.UserMapper;
 public class UserServiceImpl implements UserService{
 	
 	UserMapper userMapper;
-	JavaMailSender mailSender;
 	
 	@Autowired
-	public UserServiceImpl(UserMapper userMapper, JavaMailSender mailSender) {
+	public UserServiceImpl(UserMapper userMapper) {
 		super();
 		this.userMapper = userMapper;
-		this.mailSender = mailSender;
 	}
 
 	@Override
@@ -49,23 +44,11 @@ public class UserServiceImpl implements UserService{
 	
 	//비밀번호 찾기
 	@Override
-	public void findpw(String id) throws SQLException {
+	public String findpw(String id) throws SQLException {
 		User user = userMapper.getUser(id);
-		String userEmail = user.getEmail();
 		String temPass = getTempPassword();
-		MailDTO mailDto = createMailAndChangePassword(temPass, userEmail);
 		updatePassword(temPass, user.getUserId());
-		mailSend(mailDto);
-	}
-	
-	@Override
-	public MailDTO createMailAndChangePassword(String str, String memberEmail) {
-        MailDTO dto = new MailDTO();
-        dto.setAddress(memberEmail);
-        dto.setTitle("House Party 임시비밀번호 안내 이메일 입니다.");
-        dto.setMessage("안녕하세요. House Party 임시비밀번호 안내 관련 이메일 입니다." + " 회원님의 임시 비밀번호는 "
-                + str + " 입니다." + "로그인 후에 비밀번호를 변경을 해주세요");
-        return dto;
+		return temPass;
 	}
 
 	@Override
@@ -91,19 +74,6 @@ public class UserServiceImpl implements UserService{
         }
         return str;
 	}
-
-	@Override
-	public void mailSend(MailDTO mailDTO) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("paul9512@gmail.com");
-        message.setTo(mailDTO.getAddress());
-        message.setSubject(mailDTO.getTitle());
-        message.setText(mailDTO.getMessage());
-        message.setReplyTo("paul9512@gmail.com");
-        System.out.println("message"+message);
-        mailSender.send(message);
-	}
-	
 
 	@Override
 	public List<User> getUserList() throws SQLException {

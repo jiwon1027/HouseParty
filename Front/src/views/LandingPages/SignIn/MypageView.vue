@@ -90,12 +90,31 @@ onMounted(() => {
                     class="my-4 mb-2 w-45"
                     variant="gradient"
                     color="danger"
-                    @click="deleteUser()"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteUserModal"
                     >회원 탈퇴</MaterialButton
                   >
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal" id="deleteUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+      <div class="modal-dialog mt-6">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">회원 탈퇴</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center align-middle">
+            <h4 class="my-0">정말 탈퇴하시겠습니까?</h4>
+          </div>
+          <div class="modal-footer">
+            <button @click="deleteUser()" type="button" class="btn btn-danger" data-bs-dismiss="modal">예</button>
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">취소</button>
           </div>
         </div>
       </div>
@@ -133,6 +152,7 @@ export default {
             sessionStorage.setItem("refresh-token", null);
             console.log("회원탈퇴 성공");
           }
+          alert("탈퇴되었습니다.")
           this.$router.push({ name: "presentation" });
         })
         .catch((error) => {

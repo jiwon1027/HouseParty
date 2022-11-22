@@ -127,7 +127,8 @@ public class UserRestController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
-			userService.findpw(id);
+			String tempPass = userService.findpw(id);
+			resultMap.put("temPass", tempPass);
 			resultMap.put("message", "success");
 			status = HttpStatus.ACCEPTED;
 		} catch (SQLException e) {

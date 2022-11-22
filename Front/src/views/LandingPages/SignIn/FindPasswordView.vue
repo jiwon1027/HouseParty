@@ -55,7 +55,6 @@ onMounted(() => {
                     class="input-group-outline my-3"
                     v-on:input="setUserId($event.target.value)"
                     :label="{ text: 'ID', class: 'form-label' }"
-                    @keyup.enter="findPw()"
                     color="#000000"
                   />
 
@@ -65,6 +64,8 @@ onMounted(() => {
                       variant="gradient"
                       color="success"
                       @click="findPw()"
+                      data-bs-toggle="modal"
+                      data-bs-target="#passwordModal"
                       fullWidth
                       >비밀번호 찾기</MaterialButton
                     >
@@ -74,7 +75,23 @@ onMounted(() => {
           </div>
         </div>
       </div>
-
+    </div>
+    <!-- Modal -->
+    <div class="modal" id="passwordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+      <div class="modal-dialog mt-6">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">비밀번호 찾기</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center align-middle">
+            <p class="my-0">회원님의 임시 비밀번호는 {{ this.temPass }} 입니다.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
   </Header>
 </template>
@@ -85,6 +102,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      temPass: null,
       userId: null,
     };
   },
@@ -94,7 +112,7 @@ export default {
         .post(`http://localhost/happyhouse/users/findpw/${this.userId}`)
         .then((response) => {
           if (response.data.message === "success") {
-            alert("이메일의 임시 패스워드를 확인해주세요.")
+            this.temPass = response.data.temPass;
           }
         })
     },
