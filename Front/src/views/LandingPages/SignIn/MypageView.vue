@@ -49,9 +49,10 @@ onMounted(() => {
                   :label="{ text: 'ID', class: 'form-label' }"
                   color="#000000"
                 />
-                <MaterialInputreadOnly
+                <MaterialInput
                   id="password"
                   :value= "`${this.userPw}`"
+                  v-on:input="setUserPw($event.target.value)"
                   class="input-group input-group-outline my-3 isfocused is-filled"
                   :label="{ text: 'Password', class: 'form-label' }"
                   type="password"
@@ -186,6 +187,9 @@ export default {
           this.userName = response.data.name;
           this.userEmail = response.data.email;
         })
+    },
+    setUserPw(password) {
+      this.userPw = password;
     },
     setUserEmail(email) {
       this.userEmail = email;

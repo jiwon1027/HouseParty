@@ -19,7 +19,7 @@
 	
 	<update id="update" parameterType="user">
 		update user
-		set name = #{name}, email = #{email}
+		set name = #{name}, email = #{email}, user_pw = #{userPw}
 		where user_id = #{userId}
 	</update>
 	
