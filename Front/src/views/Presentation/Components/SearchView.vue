@@ -52,7 +52,10 @@ export default {
       searchAptList(){
         console.log("아파트 리스트 불러올꺼임")
         console.log(this.aptCode)
+        //this.$parent.selectByAptCode();
+
         this.$router.push({ name: 'map', query: {aptCode: this.aptCode} });
+        
 
     },
 
@@ -172,5 +175,7 @@ import MaterialButton from "@/components/MaterialButton.vue";
             @click="searchAptList()">
             검색
             </MaterialButton>
+            <router-view :key="$route.fullPath"></router-view>
+
         </div>
 </template>

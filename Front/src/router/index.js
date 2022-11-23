@@ -22,6 +22,11 @@ import jwtDecode from "jwt-decode";
 //드롭다운 하는데 이게 대체 왜 필요하냐
 import AuthorView from "../views/LandingPages/Author/AuthorView.vue";
 
+
+
+
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -61,6 +66,13 @@ const router = createRouter({
       name: "map",
       component: MapView,
     },
+    {
+      path: "/map/:aptCode",
+      name: "mapAptCode",
+      component: MapView,
+    },
+
+
     {
       path: "/notice",
       name: "notice",
