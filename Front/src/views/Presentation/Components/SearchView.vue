@@ -51,11 +51,10 @@ export default {
       },
       searchAptList(){
         console.log("아파트 리스트 불러올꺼임")
-        console.log(this.aptCode)
-        //this.$parent.selectByAptCode();
-
-        this.$router.push({ name: 'map', query: {aptCode: this.aptCode} });
-        
+        if (this.$route.name === "presentation") {
+            this.$router.push({ name: 'map', query: {aptCode: this.aptCode} });
+        }
+        else this.$emit('selectByAptCode', this.aptCode)
 
     },
 
@@ -100,7 +99,7 @@ import MaterialButton from "@/components/MaterialButton.vue";
               :class="{ show: showDropdown }"
               aria-labelledby="dropdownMenuButton"
             >
-              <li v-for="sido in sidoList" v-bind:key="sidoList">
+              <li v-for="sido in sidoList" v-bind:key="sido">
                 <a class="dropdown-item border-radius-md" href="javascript:;" @click="selectGugun(`${sido.dongCode}`),changeSido(`${sido.name}`)">
                   {{sido.name}}
                   </a>
@@ -128,7 +127,7 @@ import MaterialButton from "@/components/MaterialButton.vue";
               :class="{ show: showDropdown }"
               aria-labelledby="dropdownMenuButton"
             >
-              <li v-for="gugun in gugunList" v-bind:key="gugunList">
+              <li v-for="gugun in gugunList" v-bind:key="gugun">
                 <a class="dropdown-item border-radius-md" href="javascript:;" @click="selectDong(`${gugun.dongCode}`), changeGugun(`${gugun.name}`)">
                   {{gugun.name}}
                   </a>
@@ -157,7 +156,7 @@ import MaterialButton from "@/components/MaterialButton.vue";
               aria-labelledby="dropdownMenuButton"
             >
 
-          <li v-for="dong in dongList" v-bind:key="dongList">
+          <li v-for="dong in dongList" v-bind:key="dong">
                 <a class="dropdown-item border-radius-md" href="javascript:;"  @click="changeDong(`${dong.name}`), selectApt(`${dong.dongCode}`)">
                   {{dong.name}}
                   </a>

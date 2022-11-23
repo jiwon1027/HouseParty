@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/notice")
-@AllArgsConstructor
 public class NoticeRestController {
 	
 	private NoticeService service;

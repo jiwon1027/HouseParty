@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/board")
-@AllArgsConstructor
 public class BoardRestController {
 	
 	private BoardService service;
