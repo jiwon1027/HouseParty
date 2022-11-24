@@ -306,16 +306,14 @@ console
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="list-group list-group-flush overflow-auto" style="height:600px;">
-
-                    <div v-for="(area,index) in this.fav_area" :key="area" class="list-group-item list-group-item-action" >
-                          <h5>{{area.sidoName}} {{area.gugunName}} {{area.dongName}}</h5>
-                          <label>
-                            <input type="checkbox" hidden @click="deleteFavAreaInList(index)">
-                            <img src="../../../assets/img/star_true.png" width="30" height="30">
-                          </label>
+                      <div v-for="(area,index) in this.fav_area" :key="area" class="list-group-item list-group-item-action" >
+                            <h5  @click="selectByAptCode(area.dongCode)">{{area.sidoName}} {{area.gugunName}} {{area.dongName}}</h5>
+                            <label>
+                              <input type="checkbox" hidden @click="deleteFavAreaInList(index)">
+                              <img src="../../../assets/img/star_true.png" width="30" height="30">
+                            </label>
+                      </div>
                     </div>
-                    </div>
-
                 </div>
                 <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="contact-tab">
                       <div class="list-group list-group-flush overflow-auto" style="height:600px;">

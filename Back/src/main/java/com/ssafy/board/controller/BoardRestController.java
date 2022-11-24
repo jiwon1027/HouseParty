@@ -56,9 +56,6 @@ public class BoardRestController {
 	
 	@GetMapping("")
 	public ResponseEntity<?> selectAll() {
-
-		
-		
 		try {
 			List<Board> boards = service.selectAll();
 
