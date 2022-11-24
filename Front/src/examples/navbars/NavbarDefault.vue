@@ -151,17 +151,7 @@ watch(
               </RouterLink>
             </a>
           </li>
-          <li class="nav-item dropdown dropdown-hover mx-4">
-            <a
-              role="button"
-              class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-              :class="getTextColor()"
-            >
-              <RouterLink :to="{ name: 'news' }">
-                <h4 style="margin-block-end: 0px; color: #d9d9d9">NEWS</h4>
-              </RouterLink>
-            </a>
-          </li>
+
           <li class="nav-item dropdown dropdown-hover mx-4">
             <a
               role="button"

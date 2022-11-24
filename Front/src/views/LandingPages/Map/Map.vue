@@ -35,7 +35,6 @@ onMounted(()=>{
 import {useRoute} from 'vue-router';
 import axios from 'axios';
 
-let token = sessionStorage.getItem("access-token");
 
 export default {
   data() {
@@ -51,6 +50,12 @@ export default {
   },
   methods: {
     insertFavApt(idx){
+
+      let token = sessionStorage.getItem("access-token");
+
+
+
+
       axios.post("http://localhost/happyhouse/apts/fav-apt",{
           userId : jwtDecode(token).userid,
           aptCode : this.aptList[idx].aptCode,
@@ -68,6 +73,7 @@ export default {
     },
 
     deleteFavApt(idx){
+      let token = sessionStorage.getItem("access-token");
 
       axios.delete(`http://localhost/happyhouse/apts/fav-apt/${jwtDecode(token).userid}/${this.fav_apt[idx].aptCode}/${this.fav_apt[idx].dealAmount}/${this.fav_apt[idx].dealyear}/${this.fav_apt[idx].dealmonth}/${this.fav_apt[idx].dealday}/${this.fav_apt[idx].area}`
         ,{
@@ -79,7 +85,8 @@ export default {
     },
 
     insertFavArea(){
-      
+            let token = sessionStorage.getItem("access-token");
+
           axios.post("http://localhost/happyhouse/apts/fav-area",{
           userId : jwtDecode(token).userid,
           dongCode : this.$route.query.aptCode
@@ -91,6 +98,8 @@ export default {
     },
 
     deleteFavArea(){
+            let token = sessionStorage.getItem("access-token");
+
         axios.delete(`http://localhost/happyhouse/apts/fav-area/${jwtDecode(token).userid}/${this.$route.query.aptCode}`,{
         },{
         withCredentials: false,
@@ -100,7 +109,9 @@ export default {
       },
 
     deleteFavAreaInList(idx){
-      console.log("deleteFavAreaInList")
+
+        let token = sessionStorage.getItem("access-token");
+
         axios.delete(`http://localhost/happyhouse/apts/fav-area/${jwtDecode(token).userid}/${this.fav_area[idx].dongCode}`,{
         },{
         withCredentials: false,
@@ -149,7 +160,6 @@ export default {
         })
           .then((response)=>{
             this.aptList = response.data
-
             this.aptLatLng = [];
 
             for (let i = 0; i < response.data.length; i++) {
@@ -171,7 +181,6 @@ export default {
       })
         .then((response)=>{
           this.aptList = response.data
-
           this.aptLatLng = [];
 
           for (let i = 0; i < response.data.length; i++) {
@@ -184,9 +193,14 @@ export default {
 
     selectFavArea(){
 
-      this.area_count = 0
-      this.count = []
 
+      let token = sessionStorage.getItem("access-token");
+
+
+
+      if (token === null || token === "null" || token === undefined){
+        return;
+      }
       axios.get(`http://localhost/happyhouse/apts/fav-area/${jwtDecode(token).userid}`,{
       },{
       withCredentials: false,
@@ -198,6 +212,17 @@ export default {
     },
 
     selectFavApt(){
+      let token = sessionStorage.getItem("access-token");
+
+
+
+      if (token === null || token === "null" || token === undefined){
+
+        return;
+      }
+
+
+
       console.log(this.$route.query.aptCode)
       axios.get(`http://localhost/happyhouse/apts/fav-apt/${jwtDecode(token).userid}`,{
       },{
@@ -212,7 +237,6 @@ export default {
   
   created() {
 
-console
 
     if (this.$route.query.aptName != null){
       this.selectByAptName(this.$route.query.aptName);

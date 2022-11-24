@@ -45,21 +45,7 @@ defineProps({
                 <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
                   <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">로그인</h4>
                   <div class="row mt-3">
-                    <div class="col-2 text-center ms-auto">
-                      <a class="btn btn-link px-3" href="javascript:;">
-                        <i class="fa fa-facebook text-white text-lg"></i>
-                      </a>
-                    </div>
-                    <div class="col-2 text-center px-1">
-                      <a class="btn btn-link px-3" href="javascript:;">
-                        <i class="fa fa-github text-white text-lg"></i>
-                      </a>
-                    </div>
-                    <div class="col-2 text-center me-auto">
-                      <a class="btn btn-link px-3" href="javascript:;">
-                        <i class="fa fa-google text-white text-lg"></i>
-                      </a>
-                    </div>
+                   
                   </div>
                 </div>
               </div>
@@ -87,13 +73,7 @@ defineProps({
                 <!-- 에러 메세지 -->
                 <div class="text-danger mb-3">{{ message }}</div>
 
-                <MaterialSwitch
-                  class="d-flex align-items-center mb-3"
-                  id="rememberMe"
-                  labelClass="mb-0 ms-3"
-                  checked
-                  >아이디 저장</MaterialSwitch
-                >
+
 
                 <div class="text-center">
                   <MaterialButton
