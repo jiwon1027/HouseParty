@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.apt.model.dto.AptInfo;
+import com.ssafy.apt.model.dto.Area;
 
 @Mapper
 public interface AptMapper {
@@ -14,8 +15,14 @@ public interface AptMapper {
 	List<AptInfo> aptList(String dongCode) throws SQLException;
 	List<AptInfo> searchByAptName(String aptName) throws SQLException;
 	void insertFavArea(Map<String,String> map) throws SQLException;
-	void deleteFavArea(Map<String,String> map) throws SQLException;
+	void deleteFavArea(String userId, String dongcode) throws SQLException;
 	void insertFavApt(Map<String,String> map) throws SQLException;
 	void deleteFavApt(Map<String,String> map) throws SQLException;
-	
+
+	List<String> getInterestArea(String id) throws SQLException;
+    Area getInterestAreaName(String dongCode) throws SQLException;
+	List<AptInfo> favAptCodeList(String userId) throws SQLException;
+	List<AptInfo> favAptList(String aptCode) throws SQLException;
+
+    
 }

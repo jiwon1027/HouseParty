@@ -60,9 +60,7 @@ public class BoardRestController {
 		
 		
 		try {
-			System.out.println(11111111);
 			List<Board> boards = service.selectAll();
-			System.out.println(22222222);
 
 			return new ResponseEntity<List<Board>>(boards, HttpStatus.OK);
 

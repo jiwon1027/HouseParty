@@ -66,12 +66,7 @@ const router = createRouter({
       name: "map",
       component: MapView,
     },
-    {
-      path: "/map/:aptCode",
-      name: "mapAptCode",
-      component: MapView,
-    },
-
+  
 
     {
       path: "/notice",

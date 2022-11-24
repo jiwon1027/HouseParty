@@ -47,8 +47,8 @@ import BoardComponent from "@/views/LandingPages/Board/BoardComponent.vue";
                     </div>
                   </div>
 
-                    <button class="ms-4 fs-6 btn btn-outline-success" @click="boardUpdate()" >수정</button>
-                    <button class="ms-4 fs-6 btn btn-outline-danger" @click="boardDelete()" >삭제</button>
+                    <button v-if="this.isLogin" class="ms-4 fs-6 btn btn-outline-success" @click="boardUpdate()" >수정</button>
+                    <button v-if="this.isLogin" class="ms-4 fs-6 btn btn-outline-danger" @click="boardDelete()" >삭제</button>
 
               </div>
             </div>
@@ -64,6 +64,8 @@ import BoardComponent from "@/views/LandingPages/Board/BoardComponent.vue";
 
 <script>
 import axios from 'axios';
+import jwtDecode from "jwt-decode";
+
 // axios.defaults.headers['Access-Control-Allow-Origin'] = '*';
 // axios.defaults.withCredentials = true;
 
@@ -71,6 +73,7 @@ export default {
 	data() {
 		return{
 			boardInfo : [],
+      isLogin: false,
 		}
 	},
   methods: {
@@ -102,7 +105,23 @@ export default {
 				})
 
 
-    }
+    },
+
+    check() {
+        let token = sessionStorage.getItem("access-token");
+
+        if (token === undefined || token === "null" || token === null) {
+          return;
+        }
+
+        let userId = jwtDecode(token).userid
+
+        if (userId != this.boardInfo.userId) {
+          return;
+        }
+
+        return this.isLogin = true;
+      }
 
   },
 
@@ -112,7 +131,8 @@ export default {
         withCredentials: false,
       }).then((response)=>{
 					this.boardInfo = response.data
-				})
+          this.check();
+			})
 	},
 }
 </script>

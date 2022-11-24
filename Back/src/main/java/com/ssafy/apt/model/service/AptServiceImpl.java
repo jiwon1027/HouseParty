@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.apt.model.dto.AptInfo;
+import com.ssafy.apt.model.dto.Area;
 import com.ssafy.apt.model.mapper.AptMapper;
 
 @Service
@@ -38,8 +39,8 @@ public class AptServiceImpl implements AptService {
 	}
 
 	@Override
-	public void deleteFavArea(Map<String,String> map) throws SQLException {
-		aptMapper.deleteFavArea(map);
+	public void deleteFavArea(String userId, String dongcode) throws SQLException {
+		aptMapper.deleteFavArea(userId, dongcode);
 	}
 
 	@Override
@@ -55,6 +56,26 @@ public class AptServiceImpl implements AptService {
 	@Override
 	public List<AptInfo> searchByAptName(String aptName) throws SQLException {
 		return aptMapper.searchByAptName(aptName);
+	}
+
+	@Override
+	public List<String> getInterestArea(String id) throws SQLException {
+	    return aptMapper.getInterestArea(id);
+	}
+
+	@Override
+	public Area getInterestAreaName(String dongCode) throws SQLException {
+	    return aptMapper.getInterestAreaName(dongCode);
+	}
+
+	@Override
+	public List<AptInfo> favAptCodeList(String userId) throws SQLException {
+		return aptMapper.favAptCodeList(userId);
+	}
+
+	@Override
+	public List<AptInfo> favAptList(String aptCode) throws SQLException {
+		return aptMapper.favAptList(aptCode);
 	}
 
 

@@ -47,8 +47,8 @@ import BoardComponent from "@/views/LandingPages/Board/BoardComponent.vue";
                     </div>
                   </div>
 
-                    <button class="ms-4 fs-6 btn btn-outline-success" @click="noticeUpdate()" >수정</button>
-                    <button class="ms-4 fs-6 btn btn-outline-danger" @click="noticeDelete()" >삭제</button>
+                    <button v-if="this.isLogin" class="ms-4 fs-6 btn btn-outline-success" @click="noticeUpdate()" >수정</button>
+                    <button v-if="this.isLogin" class="ms-4 fs-6 btn btn-outline-danger" @click="noticeDelete()" >삭제</button>
             
               </div>
             </div>
@@ -64,11 +64,13 @@ import BoardComponent from "@/views/LandingPages/Board/BoardComponent.vue";
 
 <script>
 import axios from 'axios';
+import jwtDecode from "jwt-decode";
 
 export default {
 	data() {
 		return{
 			noticeInfo : [],
+      isLogin: false,
 		}
 	},
   methods: {
@@ -96,14 +98,31 @@ export default {
       }).then(()=>{
           this.$router.push({ name: "notice" });
 				})
-    }
+    },
+    check() {
+        let token = sessionStorage.getItem("access-token");
+
+        if (token === undefined || token === "null" || token === null) {
+          return;
+        }
+
+        let userId = jwtDecode(token).userid
+
+        if (userId != this.noticeInfo.userId) {
+          return;
+        }
+
+        return this.isLogin = true;
+      }
   },
 	created() {
 			axios
 				.get(`http://localhost/happyhouse${this.$route.path}`)
 				.then((response)=>{
 					this.noticeInfo = response.data
+          this.check();
 				})
 	},
+  
 }
 </script>

@@ -26,6 +26,7 @@
 
 <script>
 import axios from 'axios';
+import jwtDecode from "jwt-decode";
 
 export default {
 	data() {
@@ -38,6 +39,14 @@ export default {
       e.preventDefault();
     },
     boardCreate(){
+        let token = sessionStorage.getItem("access-token");
+
+        if (token === undefined || token === "null" || token === null) {
+          return;
+        }
+
+        this.boardInfo.userId = jwtDecode(token).userid
+
         console.log("board create")
         console.log(this.boardInfo)
 

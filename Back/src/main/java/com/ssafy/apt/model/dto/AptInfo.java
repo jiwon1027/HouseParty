@@ -18,7 +18,6 @@ public class AptInfo {
 	
 	public AptInfo() {
 		super();
-		System.out.println("어디임111111");
 
 
 	}
@@ -27,7 +26,6 @@ public class AptInfo {
 	public AptInfo(String apartmentName) {
 		super();
 		this.apartmentName = apartmentName;
-		System.out.println("어디임2222222");
 
 	}
 
@@ -45,7 +43,6 @@ public class AptInfo {
 		this.dealday = dealday;
 		this.lat = lat;
 		this.lng = lng;
-		System.out.println("어디임33333333");
 
 		
 
@@ -58,7 +55,6 @@ public class AptInfo {
 		this.dongcode = dongcode;
 		this.dealyear = dealyear;
 		this.dealmonth = dealmonth;
-		System.out.println("어디임44444444");
 
 
 	}

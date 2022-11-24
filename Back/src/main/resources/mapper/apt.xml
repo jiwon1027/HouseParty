@@ -14,6 +14,13 @@
 </select>
   -->  
   
+  <resultMap type="Area" id="area">
+        <result column="sidoName" property="sidoName"/>
+        <result column="gugunName" property="gugunName"/>
+        <result column="dongName" property="dongName"/>        
+    </resultMap>
+  
+  
 	<resultMap type="AptInfo" id="aptInfo">
 		<result column="aptCode" property="aptCode"/>
 		<result column="apartmentName" property="apartmentName"/>
@@ -38,22 +45,41 @@
 	where apartmentName like CONCAT('%',#{keyword},'%')
 </select>
 
-  
 <select id="insertFavArea" parameterType="map">
 	insert into interest_address(user_id, dongCode) values (#{userId}, #{dongCode});
 </select>
 
-
-<select id="deleteFavArea" parameterType="map">
-	delete from interest_address where user_id=#{userId} and dongCode=#{dongCode}
+<select id="deleteFavArea" parameterType="string">
+	delete from interest_address where user_id=#{userId} and dongCode=#{dongcode}
 </select>
 
 <select id="insertFavApt" parameterType="map">
-	insert into interest_apt(user_id, aptCode) values (#{userId}, #{aptCode});
+	insert into interest_apt(user_id, aptCode, dealAmount, dealYear, dealMonth, dealDay, area, apartmentName) 
+	values (#{userId}, #{aptCode},#{dealAmount},#{dealyear},#{dealmonth},#{dealday},#{area}, #{apartmentName});
 </select>
 
 <select id="deleteFavApt" parameterType="map">
-	delete from interest_apt where user_id=#{userId} and aptCode=#{aptCode}
+
+	delete from interest_apt where user_id=#{userId} and aptCode=#{aptCode} and dealAmount=#{dealAmount} 
+	and dealYear=#{dealyear} and dealMonth=#{dealmonth} and dealday=#{dealday} and area=#{area}
+	
 </select>
+  
+  
+<select id="getInterestArea" parameterType="string" resultType="string">
+    select dongCode from interest_address where user_id=#{userId};
+</select>
+
+<select id="getInterestAreaName" parameterType="string" resultMap="area">
+    select sidoName, gugunName, dongName from dongcode where dongCode=#{dongCode};
+</select> 
+ 
+<select id="favAptCodeList" parameterType="string" resultType="aptInfo">
+	select aptCode, dealAmount, dealYear, dealMonth, dealDay, area, apartmentName
+	from interest_apt
+	where user_id=#{userId}
+</select>
+ 
+
   
  </mapper>
